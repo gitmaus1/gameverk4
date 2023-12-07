@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+using UnityEngine.SceneManagement;
 public class RubyController : MonoBehaviour
 {
     public float speed = 3.0f;
@@ -52,7 +54,7 @@ public class RubyController : MonoBehaviour
             lookDirection.Set(move.x, move.y);
             lookDirection.Normalize();
         }
-        // anemaitar laba í át
+        // anemaitar laba Ã­ Ã¡t
         animator.SetFloat("Look X", lookDirection.x);
         animator.SetFloat("Look Y", lookDirection.y);
         animator.SetFloat("Speed", move.magnitude);
@@ -70,7 +72,7 @@ public class RubyController : MonoBehaviour
             Launch();
         }
 
-        // kveikir á dielog ef reicastið hitir NonPlayerCharacter
+        // kveikir Ã¡ dielog ef reicastiÃ° hitir NonPlayerCharacter
         if (Input.GetKeyDown(KeyCode.X))
         {
             RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, lookDirection, 1.5f, LayerMask.GetMask("NPC"));
@@ -102,11 +104,12 @@ public class RubyController : MonoBehaviour
             
             if (isInvincible)
                 return;
-            // gerir þig isInvincible og animatar Hit og gerir hlóð
+            // gerir Ã¾ig isInvincible og animatar Hit og gerir hlÃ³Ã°
             isInvincible = true;
             invincibleTimer = timeInvincible;
             animator.SetTrigger("Hit");
             PlaySound(hitSound);
+            if (currentHealth == 0) { SceneManager.LoadScene(2); }
         }
 
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
@@ -122,7 +125,7 @@ public class RubyController : MonoBehaviour
         projectile.Launch(lookDirection, 300);
         // animation
         animator.SetTrigger("Launch");
-        // hlóð
+        // hlÃ³Ã°
         PlaySound(throwSound);
     }
 
