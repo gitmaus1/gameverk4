@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.SceneManagement;
 
 public class EnemyController : MonoBehaviour
 {
@@ -52,7 +53,7 @@ public class EnemyController : MonoBehaviour
         }
 
         Vector2 position = rigidbody2D.position;
-        // laba up eða niður
+        // laba up eÃ°a niÃ°ur
         if (vertical)
         {
             position.y = position.y + Time.deltaTime * speed * direction;
@@ -75,12 +76,12 @@ public class EnemyController : MonoBehaviour
 
         if (player != null)
         {
-            // tekur líf
+            // tekur lÃ­f
             player.ChangeHealth(-1);
         }
     }
 
-    // ef velmeni er lagað
+    // ef velmeni er lagaÃ°
     public void Fix()
     {
         broken = false;
@@ -89,5 +90,7 @@ public class EnemyController : MonoBehaviour
         animator.SetTrigger("Fixed");
         // stopar reik
         smokeEffect.Stop();
+        rememberMe.stig = rememberMe.stig + 1;
+        if (rememberMe.stig==6) { SceneManager.LoadScene(2); }
     }
 }
